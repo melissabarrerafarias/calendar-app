@@ -4,6 +4,6 @@ console.log(date);
 $("#currentDay").append(date);
 
 // time blocks
-$("#task-list").on("click", function() {
-    
+$(".col-10").on("click", "p", function() {
+    console.log(this);
 })
