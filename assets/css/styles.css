@@ -65,6 +65,8 @@ body {
     border-bottom-right-radius: 15px;
     background-color: #06AED5;
     color: white;
+    width: 100%;
+    height: 50%;
   }
   
   .saveBtn i:hover {
@@ -72,8 +74,11 @@ body {
     transition: all .3s ease-in-out;
   }
 
+  .time {
+    width: 50px;
+  }
+
   p {
     width: 100%;
     height: 100%;
   }
-
