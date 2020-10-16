@@ -12,13 +12,4 @@ $(".col-10").on("click", "p", function () {
         .addClass("form-control")
         .val(text);
         $(this).replaceWith(textInput);
-
-        $(".col-10").on("blur", "textarea", function() {
-            var text = $(this)
-            .val()
-            .trim();
-
-            
-            
         });
-})
