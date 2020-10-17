@@ -3,8 +3,11 @@ var date = moment().format('LLLL');
 console.log(date);
 $("#currentDay").append(date);
 
+var timeBlock = $("#one");
+
+var calendarContent = [];
 // time blocks
-$(".col-10").on("click", "p", function () {
+var task = $(".col-10").on("click", "p", function () {
     var text = $(this)
         .text()
         .trim();
@@ -12,17 +15,16 @@ $(".col-10").on("click", "p", function () {
         .addClass("form-control")
         .val(text);
     $(this).replaceWith(textInput);
+    console.log(textInput);
 });
 
-// $(".saveBtn").on("click", function() {
-//     textInput.val = $(this)
-//     .val()
-//     .trim();
-    
-//     console.log(textInput)
+function saveTask() {
+    $(".saveBtn").on("click", function (task) {
+        console.log("this is working")
 
-// })
-
+    })
+}
+saveTask();
 // var to get item from local storage
 //  var savedToDo = JSON.parse(localStorage.getItem('ToDo')) || [];
 
@@ -31,3 +33,27 @@ $(".col-10").on("click", "p", function () {
     //     localStorage.setItem("ToDo", JSON.stringify(textInput));
     //     JSON.parse(localStorage.getItem('ToDo')) || [];
     // })
+
+
+// change colors of text block
+function changeColor() {
+
+    var updateColor = moment().hour();
+
+    $(timeBlock).removeClass("past");
+
+    console.log(updateColor);
+
+    if (moment().isAfter(updateColor)) {
+        $(timeBlock).addClass("future");
+    }
+
+    else if (moment().isBefore(updateColor)) {
+        $(timeBlock).addClass("past")
+    }
+
+    else if (moment().isSame(updateColor)) {
+        $(timeBlock).addClass("present")
+    }
+};
+changeColor();
