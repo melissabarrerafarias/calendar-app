@@ -8,31 +8,56 @@ var timeBlock = $("#one");
 var calendarContent = [];
 // time blocks
 var task = $(".col-10").on("click", "p", function () {
+    var time = $(this).attr("id")
     var text = $(this)
         .text()
         .trim();
     var textInput = $("<textarea>")
         .addClass("form-control")
-        .val(text);
+        .val(text)
+        .attr("id", `event${time}`)
     $(this).replaceWith(textInput);
     console.log(textInput);
 });
 
 function saveTask() {
-    $(".saveBtn").on("click", function (task) {
+    $(".saveBtn").on("click", function () {
         console.log("this is working")
+        var buttonTime = $(this).data("time")
+        var event = $(`#event${buttonTime}`).val();
+        console.log({event})
 
+        var newToDo = {
+            hour: buttonTime,
+            toDo: event,
+        }
+
+        var toDos = JSON.parse(localStorage.getItem("toDos")) 
+        if (toDos) {
+            var toDoExist = false;
+            for ( i = 0; i < toDos.length; i++) {
+                if (newToDo.hour === toDos[i].hour) {
+                    toDos[i] = newToDo;
+                    toDoExist = true;
+                }
+            }
+            if (!toDoExist) {
+                toDos.push(newToDo);
+            }
+        } else {
+            toDos = [newToDo]
+            
+        }
+
+        //saving local storage goes in here
+        localStorage.setItem("toDos", JSON.stringify(toDos));
+        // [{hour: nine, toDo:"updated portfolio"}]
     })
 }
 saveTask();
 // var to get item from local storage
 //  var savedToDo = JSON.parse(localStorage.getItem('ToDo')) || [];
 
-// $(".save-btn").on("click", function () {
-    //     console.log("hey this is working!");
-    //     localStorage.setItem("ToDo", JSON.stringify(textInput));
-    //     JSON.parse(localStorage.getItem('ToDo')) || [];
-    // })
 
 
 // change colors of text block
@@ -40,20 +65,16 @@ function changeColor() {
 
     var updateColor = moment().hour();
 
-    $(timeBlock).removeClass("past");
-
     console.log(updateColor);
 
     if (moment().isAfter(updateColor)) {
+        $(timeBlock).removeClass("past");
         $(timeBlock).addClass("future");
     }
 
-    else if (moment().isBefore(updateColor)) {
-        $(timeBlock).addClass("past")
-    }
-
     else if (moment().isSame(updateColor)) {
-        $(timeBlock).addClass("present")
+        $(timeBlock).removeClass("past");
+        $(timeBlock).addClass("present");
     }
 };
 changeColor();
