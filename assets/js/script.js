@@ -64,7 +64,6 @@ function changeColor() {
             $(this).removeClass("past");
             $(this).addClass("present");
         }
-        console.log(hour)
     })
     
 };
