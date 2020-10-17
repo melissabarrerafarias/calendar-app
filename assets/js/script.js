@@ -3,6 +3,12 @@ var date = moment().format('LLLL');
 console.log(date);
 $("#currentDay").append(date);
 
+var afterDate = moment().add(1, "h");
+console.log(afterDate);
+
+var beforeDate = moment().subtract(1, "h");
+console.log(beforeDate);
+
 var timeBlock = $(".description");
 
 
