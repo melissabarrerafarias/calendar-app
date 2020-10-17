@@ -1,15 +1,18 @@
-// current time 
+var toDos = JSON.parse(localStorage.getItem("toDos")) || {}
+
+
+$(".calendar-input").each(function () {
+    var time = $(this).attr("id")
+    $(this).text(toDos[time] || '')
+})
+
+
+// times 
 var date = moment().format('LLLL');
 console.log(date);
 $("#currentDay").append(date);
 
-var afterDate = moment().add(1, "h");
-console.log(afterDate);
-
-var beforeDate = moment().subtract(1, "h");
-console.log(beforeDate);
-
-var timeBlock = $(".description");
+var $timeBlock = $(".description");
 
 
 // time blocks
@@ -26,60 +29,49 @@ var task = $(".col-10").on("click", "p", function () {
         .val(text)
         .attr("id", `event${time}`) // this creates id = "event+time"
     $(this).replaceWith(textInput);
-    console.log({textInput});
+    console.log({ textInput });
 });
 
 function saveTask() {
     $(".saveBtn").on("click", function () {
         var buttonTime = $(this).data("time")
         var event = $(`#event${buttonTime}`).val();
-        console.log({event})
+        console.log({ event })
 
-        var newToDo = {
-            hour: buttonTime,
-            toDo: event,
-        }
+        toDos[buttonTime] = event;
 
-        var toDos = JSON.parse(localStorage.getItem("toDos")) 
-        if (toDos) {
-            var toDoExist = false;
-            for ( i = 0; i < toDos.length; i++) {
-                if (newToDo.hour === toDos[i].hour) {
-                    toDos[i] = newToDo;
-                    toDoExist = true;
-                }
-            }
-            if (!toDoExist) {
-                toDos.push(newToDo);
-            }
-        } else {
-            toDos = [newToDo]
-            
-        }
-        //saving local storage goes in here
+        //save to local storage goes in here
         localStorage.setItem("toDos", JSON.stringify(toDos));
         // [{hour: nine, toDo:"updated portfolio"}]
     })
 }
 saveTask();
 
-
-
 // change colors of text block
-// function changeColor() {
+function changeColor() {
 
-//     var updateColor = moment().hour();
+    var currentHour = moment().hour();
+    
+    
+    $timeBlock.each( function() {
+        var hour = $(this).data("time")
+        if (hour > currentHour) {
+            $(this).removeClass("past");
+            $(this).addClass("future");
+        }
+    
+        else if (hour == currentHour) {
+            $(this).removeClass("past");
+            $(this).addClass("present");
+        }
+        console.log(hour)
+    })
+    
+};
+changeColor();
 
-//     console.log(updateColor);
+// var timeHour= moment().hour();
+//     if ()
 
-//     if (moment().isAfter(updateColor)) {
-//         $(timeBlock).removeClass("past");
-//         $(timeBlock).addClass("future");
-//     }
 
-//     else if (moment().isSame(updateColor)) {
-//         $(timeBlock).removeClass("past");
-//         $(timeBlock).addClass("present");
-//     }
-// };
-// changeColor();
+//     console.log(timeHour);
