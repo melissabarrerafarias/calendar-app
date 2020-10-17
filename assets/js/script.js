@@ -8,21 +8,23 @@ var timeBlock = $(".description");
 
 // time blocks
 var task = $(".col-10").on("click", "p", function () {
+
+    // this targets the id in the p section
     var time = $(this).attr("id")
     var text = $(this)
         .text()
         .trim();
+    // when p is clicked, turned into a textarea
     var textInput = $("<textarea>")
         .addClass("form-control")
         .val(text)
-        .attr("id", `event${time}`)
+        .attr("id", `event${time}`) // this creates id = "event+time"
     $(this).replaceWith(textInput);
-    console.log(textInput);
+    console.log({textInput});
 });
 
 function saveTask() {
     $(".saveBtn").on("click", function () {
-        console.log("this is working")
         var buttonTime = $(this).data("time")
         var event = $(`#event${buttonTime}`).val();
         console.log({event})
@@ -48,7 +50,6 @@ function saveTask() {
             toDos = [newToDo]
             
         }
-        $(".calendar-input").append(toDos);
         //saving local storage goes in here
         localStorage.setItem("toDos", JSON.stringify(toDos));
         // [{hour: nine, toDo:"updated portfolio"}]
