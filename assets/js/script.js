@@ -3,9 +3,9 @@ var date = moment().format('LLLL');
 console.log(date);
 $("#currentDay").append(date);
 
-var timeBlock = $("#one");
+var timeBlock = $(".description");
 
-var calendarContent = [];
+
 // time blocks
 var task = $(".col-10").on("click", "p", function () {
     var time = $(this).attr("id")
@@ -48,33 +48,31 @@ function saveTask() {
             toDos = [newToDo]
             
         }
-
+        $(".calendar-input").append(toDos);
         //saving local storage goes in here
         localStorage.setItem("toDos", JSON.stringify(toDos));
         // [{hour: nine, toDo:"updated portfolio"}]
     })
 }
 saveTask();
-// var to get item from local storage
-//  var savedToDo = JSON.parse(localStorage.getItem('ToDo')) || [];
 
 
 
 // change colors of text block
-function changeColor() {
+// function changeColor() {
 
-    var updateColor = moment().hour();
+//     var updateColor = moment().hour();
 
-    console.log(updateColor);
+//     console.log(updateColor);
 
-    if (moment().isAfter(updateColor)) {
-        $(timeBlock).removeClass("past");
-        $(timeBlock).addClass("future");
-    }
+//     if (moment().isAfter(updateColor)) {
+//         $(timeBlock).removeClass("past");
+//         $(timeBlock).addClass("future");
+//     }
 
-    else if (moment().isSame(updateColor)) {
-        $(timeBlock).removeClass("past");
-        $(timeBlock).addClass("present");
-    }
-};
-changeColor();
+//     else if (moment().isSame(updateColor)) {
+//         $(timeBlock).removeClass("past");
+//         $(timeBlock).addClass("present");
+//     }
+// };
+// changeColor();
